@@ -162,6 +162,15 @@
             display: none;
         }
 
+        #copy {
+            font-size: small;
+        }
+
+        #copy>a {
+            color: black;
+            text-decoration: none;
+        }
+
         /* STYLIZACJA WYDRUKU */
         @media print {
             body {
@@ -177,7 +186,7 @@
                 max-width: 100%;
             }
             
-            h2, h3, .form-group, .row, .results, .btn-print, .days-table {
+            h2, h3, .form-group, .row, .results, .btn-print, .days-table, footer, hr {
                 display: none !important;
             }
 
@@ -249,18 +258,24 @@
                 border: 2px solid #000;
             }
 
-            .footer-signature {
-                margin-top: 50px;
-                display: flex;
-                justify-content: space-between;
+            .print-footer-container {
+                margin-top: 40px;
+                border-top: 1px solid #000;
+                padding-top: 15px;
             }
 
-            .signature-box {
-                width: 200px;
-                border-top: 1px solid #000;
+            .print-notice {
                 text-align: center;
-                padding-top: 5px;
+                font-weight: bold;
                 font-size: 11px;
+                margin-bottom: 10px;
+                line-height: 1.4;
+            }
+
+            .print-copy {
+                font-size: 10px;
+                text-align: center;
+                color: #444;
             }
         }
     </style>
@@ -303,7 +318,6 @@
         </div>
     </div>
 
-    <!-- SEKCJA ROZPISKI DNI TYGODNIA -->
     <h3>Koszty eksploatacyjne (Paliwo i Mycie)</h3>
     <table class="days-table">
         <thead>
@@ -353,8 +367,11 @@
 
         <button class="btn-print" onclick="window.print()">🖨️ Zapisz/Drukuj Podsumowanie</button>
     </div>
+    
+    <footer style="text-align: center; margin-top: 20px;"><b>Wszelkie obliczenia wykonane na stronie mają charakter poglądowy i mogą nieznacznie różnić się od ostatecznych wyliczeń przygotowanych przez Agmer.</b></footer>
+    <hr>
+    <footer id="copy" style="text-align: center;"><a href="https://ggone.pl" target="_blank" rel="noopener noreferrer">&copy; GGONE sp. z o. o.</a> Wszelkie prawa zastrzeżone</footer>
 
-    <!-- PANEL DO WYDRUKU -->
     <div id="print-area">
         <div class="print-title">TYGODNIOWY RAPORT ROZLICZENIOWY</div>
         <div class="print-date" id="p-okres">Okres rozliczenia: -- do --</div>
@@ -390,14 +407,16 @@
                 </tr>
             </thead>
             <tbody id="p-dni-rows">
-                <!-- Generowane przez JS -->
-            </tbody>
+                </tbody>
         </table>
-
-        <div class="footer-signature">
-            <div class="signature-box" style="float: left;">Podpis kierowcy</div>
-            <div class="signature-box" style="float: right;">Podpis rozliczającego</div>
-            <div style="clear: both;"></div>
+        
+        <div class="print-footer-container">
+            <div class="print-notice">
+                Wszelkie obliczenia wykonane na stronie mają charakter poglądowy i mogą nieznacznie różnić się od ostatecznych wyliczeń przygotowanych przez Agmer.
+            </div>
+            <div class="print-copy">
+                &copy; GGONE sp. z o. o. Wszelkie prawa zastrzeżone
+            </div>
         </div>
     </div>
 </div>
@@ -491,7 +510,7 @@
 
         const prowizjaBazowa = brutto * mnoznikProcentowy;
         
-        // 1. TUTAJ OBLIczamy SUMĘ NETTO: Prowizja - Paliwo - Mycie
+        // 1. TUTAJ OBLICZAMY SUMĘ NETTO: Prowizja - Paliwo - Mycie
         const bazyNetto = prowizjaBazowa - sumaPaliwa - sumaMycia;
         
         // 2. TUTAJ OBLICZAMY PRZELEW: Prowizja bazowa (ZANIM odjęto paliwo) - Gotówka - Kary
